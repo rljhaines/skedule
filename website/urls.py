@@ -1,10 +1,22 @@
 from django.conf.urls import patterns, include, url
-from website import views
+from rest_framework import generics, serializers
+from website.models import Greeting 
+
+class GreetingSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = Greeting
+        fields = ('id', 'text')
+
+class GreetingList(generics.ListCreateAPIView):
+    model=Greeting
+    serializer_class = GreetingSerializer
+
+class GreetingDetails(generics.RetrieveAPIView):
+    model=Greeting
+    serializer_class = GreetingSerializer
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'skedule.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+   url(r'^greeting/$', GreetingList.as_view()),
+   url(r'^greeting/(?P<pk>\d+)/$', GreetingDetails.as_view()),
 
-    url(r'^$', views.greeting),
 )
