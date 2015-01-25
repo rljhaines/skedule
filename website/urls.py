@@ -5,7 +5,7 @@ from website.models import Greeting
 class GreetingSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Greeting
-        fields = ('id', 'text')
+        fields = ('id', 'salutation')
 
 class GreetingList(generics.ListCreateAPIView):
     model=Greeting
